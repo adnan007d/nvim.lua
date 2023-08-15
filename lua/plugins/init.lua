@@ -3,11 +3,6 @@ return {
   config = function(LazyPlugin)
     vim.cmd("colorscheme dracula")
   end},
-  {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
-    -- or                              , branch = '0.1.x',
-    dependencies = { 'nvim-lua/plenary.nvim' }
-  },
   {"nvim-treesitter/nvim-treesitter", build = function() 
     require("nvim-treesitter.install").update({ with_sync = true })
   end },
@@ -24,8 +19,6 @@ return {
   "mbbill/undotree",
   "tpope/vim-fugitive",
   "nvim-treesitter/nvim-treesitter-context",
-
-  
    {
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v1.x',
