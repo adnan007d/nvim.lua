@@ -32,6 +32,7 @@ return {
       'gopls',
       'tailwindcss',
       'svelte',
+      'lua_ls'
     })
 
     -- Fix Undefined global 'vim'
