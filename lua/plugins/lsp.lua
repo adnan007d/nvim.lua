@@ -15,6 +15,9 @@ return {
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/cmp-nvim-lua' },
 
+    -- lsp for neovim setting
+    { "folke/neodev.nvim",                opts = {} },
+
     -- Snippets
     { 'L3MON4D3/LuaSnip' },
     { 'rafamadriz/friendly-snippets' },
@@ -93,6 +96,22 @@ return {
     lspconfig.emmet_ls.setup({
       capabilities = capabilities,
       filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less' },
+    })
+
+
+    require("neodev").setup({
+      -- add any options here, or leave empty to use the default settings
+    })
+
+    -- example to setup lua_ls and enable call snippets
+    lspconfig.lua_ls.setup({
+      settings = {
+        Lua = {
+          completion = {
+            callSnippet = "Replace"
+          }
+        }
+      }
     })
   end
 }
