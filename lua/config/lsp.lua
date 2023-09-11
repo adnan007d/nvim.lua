@@ -1,7 +1,7 @@
 -- From kickstart.nvim
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach_common = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -91,6 +91,7 @@ local servers = {
   tsserver = {},
   html = { filetypes = { 'html', 'twig', 'hbs' } },
   emmet_ls = {},
+  eslint = {},
   tailwindcss = {},
   svelte = {},
   lua_ls = {
@@ -125,11 +126,12 @@ local mason_lspconfig = require 'mason-lspconfig'
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
+
 mason_lspconfig.setup_handlers {
   function(server_name)
     require('lspconfig')[server_name].setup {
       capabilities = capabilities,
-      on_attach = on_attach,
+      on_attach = on_attach_common,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
