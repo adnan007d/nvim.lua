@@ -23,7 +23,6 @@ return {
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-      { 'hrsh7th/cmp-nvim-lsp' },
       { 'williamboman/mason-lspconfig.nvim' },
 
 
@@ -50,7 +49,7 @@ return {
       -- And you can configure cmp even more, if you want to.
       local cmp = require('cmp')
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
-      local cmp_format = lsp_zero.cmp_format()
+      -- local cmp_format = lsp_zero.cmp_format()
       local luasnip = require 'luasnip'
 
       local has_words_before = function()
@@ -59,7 +58,7 @@ return {
       end
 
       cmp.setup({
-        formatting = cmp_format,
+        -- formatting = cmp_format,
         mapping = cmp.mapping.preset.insert({
           ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
           ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -87,6 +86,12 @@ return {
             end
           end, { "i", "s" }),
         }),
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = 'buffer' },
+          { name = 'path' },
+          { name = 'nvim_lua' }
+        },
       })
 
       lsp_zero.on_attach(function(client, bufnr)
