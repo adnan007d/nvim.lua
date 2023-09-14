@@ -155,6 +155,7 @@ return {
         handlers = {
           lsp_zero.default_setup,
           gopls = require("config.lsp.gopls"),
+          tsserver = require("config.lsp.tsserver"),
           lua_ls = function()
             -- (Optional) Configure lua language server for neovim
             local lua_opts = lsp_zero.nvim_lua_ls()
