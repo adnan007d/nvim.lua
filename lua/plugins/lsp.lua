@@ -44,13 +44,13 @@ return {
 
       local lsp_zero = require('lsp-zero').preset("recommended")
 
-      require('luasnip.loaders.from_vscode').lazy_load()
-
       -- And you can configure cmp even more, if you want to.
       local cmp = require('cmp')
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
-      -- local cmp_format = lsp_zero.cmp_format()
+      local cmp_format = lsp_zero.cmp_format()
       local luasnip = require 'luasnip'
+      require('luasnip.loaders.from_vscode').lazy_load()
+      luasnip.config.setup {}
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -58,7 +58,12 @@ return {
       end
 
       cmp.setup({
-        -- formatting = cmp_format,
+        snippet = {
+          expand = function(args)
+            luasnip.lsp_expand(args.body)
+          end,
+        },
+        formatting = cmp_format,
         mapping = cmp.mapping.preset.insert({
           ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
           ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
@@ -88,6 +93,7 @@ return {
         }),
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'luasnip' },
           { name = 'buffer' },
           { name = 'path' },
           { name = 'nvim_lua' }
@@ -97,8 +103,11 @@ return {
       lsp_zero.on_attach(function(client, bufnr)
         require("config.inlayhints").setup(client, bufnr)
 
-
         local opts = { buffer = bufnr, remap = false }
+
+        -- formatting
+        vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
+
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, opts)
@@ -139,10 +148,10 @@ return {
         }
       })
 
-
       require("mason").setup();
       require("mason-lspconfig").setup({
-        ensure_installed = { "tsserver", "gopls", "rust_analyzer", "eslint", "emmet_ls", "html", "tailwindcss", "svelte" },
+        ensure_installed = { "lua_ls", "tsserver", "gopls", "rust_analyzer", "eslint", "emmet_ls", "html", "tailwindcss",
+          "svelte" },
         handlers = {
           lsp_zero.default_setup,
           gopls = require("config.lsp.gopls"),
