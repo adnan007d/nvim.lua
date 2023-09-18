@@ -1,8 +1,8 @@
 return function()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+  local lsp_util = require("config.lsp.util")
   require('lspconfig').tsserver.setup({
-    capabilities = capabilities,
+    on_attach = lsp_util.on_attach,
+    capabilities = lsp_util.capabilities,
     on_init = function(client)
       client.server_capabilities.documentFormattingProvider = false
       client.server_capabilities.documentFormattingRangeProvider = false

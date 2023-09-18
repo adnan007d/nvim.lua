@@ -1,5 +1,8 @@
 return function()
+  local lsp_util = require("config.lsp.util")
   require("lspconfig").gopls.setup {
+    on_attach = lsp_util.on_attach,
+    capabibilities = lsp_util.capabilities,
     settings = {
       gopls = {
         -- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
