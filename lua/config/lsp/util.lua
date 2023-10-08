@@ -39,5 +39,18 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
+local function getHomeDirectory()
+    if jit.os ~= "Windows" then
+        -- Windows
+        return os.getenv('USERPROFILE') or os.getenv('HOME')
+    else
+        -- Unix-like systems
+        return os.getenv('HOME')
+    end
+end
+
+M.getHomeDirectory = getHomeDirectory
+
 
 return M
+

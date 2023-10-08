@@ -35,25 +35,27 @@ return {
         "rust_analyzer",
         "eslint",
         "emmet_ls",
-        "html",
         "tailwindcss",
         "svelte",
       }
       local lsp_util = require("config.lsp.util")
       mason_lspconfig.setup({
         ensure_installed = servers,
-        mason_lspconfig.setup_handlers {
-          function(server_name)
-            require('lspconfig')[server_name].setup {
-              capabilities = lsp_util.capabilities,
-              on_attach = lsp_util.common_on_attach,
-            }
-          end,
-          lua_ls = require("config.lsp.lua_ls"),
-          gopls = require("config.lsp.gopls"),
-          tsserver = require("config.lsp.tsserver")
-        }
       })
+      mason_lspconfig.setup_handlers {
+        function(server_name)
+          require('lspconfig')[server_name].setup {
+            capabilities = lsp_util.capabilities,
+            on_attach = lsp_util.on_attach,
+          }
+        end,
+        lua_ls = require("config.lsp.lua_ls"),
+        gopls = require("config.lsp.gopls"),
+        tsserver = require("config.lsp.tsserver")
+      }
+
+      require("config.lsp.html")();
+      -- require("config.lsp.css")();
 
       local cmp = require('cmp')
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -61,6 +63,11 @@ return {
       require('luasnip.loaders.from_vscode').lazy_load()
 
       cmp.setup({
+        window = {
+          documentation = { -- no border; native-style scrollbar
+            border = "rounded",
+          },
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
