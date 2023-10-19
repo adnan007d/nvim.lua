@@ -1,5 +1,5 @@
 return {
-  'adnan007d/vim-prettier',
-  build = "yarn install",
+  'prettier/vim-prettier',
+  build = "yarn install --frozen-lockfile --production",
   ft = { 'javascript', 'typescript', 'css', 'markdown', 'html', 'javascriptreact', 'typescriptreact', 'json' }
 }
