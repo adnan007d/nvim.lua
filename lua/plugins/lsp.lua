@@ -37,6 +37,7 @@ return {
         "emmet_ls",
         "tailwindcss",
         "svelte",
+        "templ",
       }
       local lsp_util = require("config.lsp.util")
       mason_lspconfig.setup({
@@ -51,7 +52,9 @@ return {
         end,
         lua_ls = require("config.lsp.lua_ls"),
         gopls = require("config.lsp.gopls"),
-        tsserver = require("config.lsp.tsserver")
+        tsserver = require("config.lsp.tsserver"),
+        tailwindcss = require("config.lsp.tailwindcss"),
+        emmet_ls = require("config.lsp.emmet_ls")
       }
 
       require("config.lsp.html")();
@@ -121,6 +124,12 @@ return {
       vim.diagnostic.config({
         virtual_text = true,
         float = { border = "rounded" }
+      })
+
+      vim.filetype.add({
+        extension = {
+          templ = "templ",
+        },
       })
     end
   }
