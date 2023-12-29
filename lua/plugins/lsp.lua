@@ -71,6 +71,12 @@ return {
       local luasnip = require 'luasnip'
       require('luasnip.loaders.from_vscode').lazy_load()
 
+      local has_words_before = function()
+        if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then return false end
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+      end
+
       cmp.setup({
         window = {
           documentation = { -- no border; native-style scrollbar
@@ -88,15 +94,13 @@ return {
           ['<C-y>'] = cmp.mapping.confirm({ select = true }),
           ["<C-Space>"] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
+          ["<Tab>"] = vim.schedule_wrap(function(fallback)
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
             else
               fallback()
             end
-          end, { 'i', 's' }),
+          end),
           ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
@@ -108,6 +112,7 @@ return {
           end, { 'i', 's' }),
         }),
         sources = {
+          { name = "copilot" },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'buffer' },
