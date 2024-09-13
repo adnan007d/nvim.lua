@@ -1,6 +1,6 @@
 return function()
   local lsp_util = require("config.lsp.util")
-  require('lspconfig').tsserver.setup({
+  require('lspconfig').ts_ls.setup({
     on_attach = lsp_util.on_attach,
     capabilities = lsp_util.capabilities,
     on_init = function(client)

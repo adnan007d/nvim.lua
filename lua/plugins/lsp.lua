@@ -36,7 +36,7 @@ return {
 
       local servers = {
         "lua_ls",
-        "tsserver",
+        -- "ts_ls",
         "gopls",
         "rust_analyzer",
         "eslint",
@@ -58,7 +58,7 @@ return {
         end,
         lua_ls = require("config.lsp.lua_ls"),
         gopls = require("config.lsp.gopls"),
-        tsserver = require("config.lsp.tsserver"),
+        ts_ls = require("config.lsp.ts_ls"),
         tailwindcss = require("config.lsp.tailwindcss"),
         emmet_ls = require("config.lsp.emmet_ls")
       }
