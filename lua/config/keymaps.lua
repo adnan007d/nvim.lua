@@ -42,3 +42,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+vim.keymap.set("v", "<TAB>", ">gv")
+vim.keymap.set("v", "<S-TAB>", "<gv")
