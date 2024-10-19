@@ -29,7 +29,7 @@ return function()
           upgrade_dependency = true,
           run_govulncheck = true,
         },
-        usePlaceholders = true,
+        -- usePlaceholders = true,
         completeUnimported = true,
         staticcheck = true,
         matcher = 'Fuzzy',

@@ -65,6 +65,8 @@ return {
         emmet_ls = require("config.lsp.emmet_ls"),
         jsonls = require("config.lsp.jsonls"),
         yamlls = require("config.lsp.yamlls"),
+        ruff = require("config.lsp.ruff"),
+        pylsp = require("config.lsp.pylsp"),
       }
 
       require("config.lsp.html")();
