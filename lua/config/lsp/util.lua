@@ -1,8 +1,6 @@
 local M = {}
 
 M.on_attach = function(client, bufnr)
-    require("config.inlayhints").setup(client, bufnr)
-
     local opts = { buffer = bufnr, remap = false }
 
     -- formatting

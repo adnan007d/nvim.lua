@@ -37,13 +37,10 @@ return {
       local servers = {
         "lua_ls",
         -- "ts_ls",
-        "gopls",
-        "rust_analyzer",
         "eslint",
         "emmet_ls",
         "tailwindcss",
         "svelte",
-        "templ",
         "jsonls",
         "yamlls"
       }
@@ -68,9 +65,6 @@ return {
         ruff = require("config.lsp.ruff"),
         pylsp = require("config.lsp.pylsp"),
       }
-
-      require("config.lsp.html")();
-      -- require("config.lsp.css")();
 
       local cmp = require('cmp')
       local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -139,26 +133,36 @@ return {
       })
 
 
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { border = "rounded" }
-      )
+      -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+      --   vim.lsp.handlers.hover,
+      --   { border = "rounded" }
+      -- )
 
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help,
-        { border = "rounded" }
-      )
+
+      -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.with(
+      --   vim.lsp.buf.handlers.signature_help,
+      --   { border = "rounded" }
+      -- )
+
+
+      vim.lsp.buf.hover({
+        border = "rounded"
+      })
+
+      vim.lsp.buf.signature_help({
+        border = "rounded"
+      })
 
       vim.diagnostic.config({
         virtual_text = true,
         float = { border = "rounded" }
       })
 
-      vim.filetype.add({
-        extension = {
-          templ = "templ",
-        },
-      })
+      -- vim.filetype.add({
+      --   extension = {
+      --     templ = "templ",
+      --   },
+      -- })
     end
   }
 }
