@@ -4,5 +4,20 @@ return {
   { "iamcco/markdown-preview.nvim", build = "cd app && npm install" },
   -- "vrischmann/tree-sitter-templ",
   "b0o/schemastore.nvim",
-  "michaeljsmith/vim-indent-object"
+  "michaeljsmith/vim-indent-object",
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    ---@module "ibl"
+    ---@type ibl.config
+    opts = {},
+  },
+  {
+    "dmmulroy/tsc.nvim",
+    config = function()
+      require("tsc").setup({
+      bin_path = vim.fn.findfile("node_modules/.bin/tsc"),
+    }) end
+  },
+
 }

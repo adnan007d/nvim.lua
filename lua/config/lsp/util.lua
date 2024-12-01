@@ -35,6 +35,11 @@ M.on_attach = function(client, bufnr)
     vim.keymap.set("n", '<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
+
+    if client.name == "ts_ls" then
+      vim.keymap.set("n", "<leader>tc", ':TSC<CR>')
+      vim.keymap.set("n", "<leader>tcs", ':TSCStop<CR>')
+    end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
