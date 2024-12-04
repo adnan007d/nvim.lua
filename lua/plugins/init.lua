@@ -19,5 +19,5 @@ return {
       bin_path = vim.fn.findfile("node_modules/.bin/tsc"),
     }) end
   },
-
+  "sindrets/diffview.nvim"
 }
