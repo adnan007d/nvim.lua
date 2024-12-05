@@ -6,8 +6,9 @@ M.on_attach = function(client, bufnr)
     -- formatting
     vim.keymap.set("n", "<leader>f",
         function()
-            vim.lsp.buf.format { async = true }
-        end, opts)
+            require("conform").format({ bufnr = bufnr, async = true, lsp_format = "fallback" })
+        end,
+        opts)
 
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -37,8 +38,8 @@ M.on_attach = function(client, bufnr)
     end, opts)
 
     if client.name == "ts_ls" then
-      vim.keymap.set("n", "<leader>tc", ':TSC<CR>')
-      vim.keymap.set("n", "<leader>tcs", ':TSCStop<CR>')
+        vim.keymap.set("n", "<leader>tc", ':TSC<CR>')
+        vim.keymap.set("n", "<leader>tcs", ':TSCStop<CR>')
     end
 end
 
