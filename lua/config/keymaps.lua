@@ -45,3 +45,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 vim.keymap.set("v", "<TAB>", ">gv")
 vim.keymap.set("v", "<S-TAB>", "<gv")
+
+
+vim.keymap.set("n", "[ct", function()
+  require("treesitter-context").go_to_context(vim.v.count1)
+end, { silent = true })
