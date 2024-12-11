@@ -1,4 +1,12 @@
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv",
+  function()
+    if pcall(require, "nvim-tree") then
+      require("nvim-tree.api").tree.open()
+    else
+      vim.cmd.Ex()
+    end
+  end
+)
 
 -- From Theprimagen https://github.com/ThePrimeagen/init.lua/blob/master/lua/theprimeagen/remap.lua
 -- Moves a line up or down
