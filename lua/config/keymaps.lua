@@ -1,7 +1,17 @@
 vim.keymap.set("n", "<leader>pv",
   function()
     if pcall(require, "nvim-tree") then
-      require("nvim-tree.api").tree.open()
+      local buf_name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+      local cwd =  vim.fn.getcwd()
+
+      -- if the current buffer is not a file, then use the cwd
+      if buf_name ~= "" then
+        cwd = vim.fn.fnamemodify(buf_name, ":p:h")
+      end
+
+      require("nvim-tree.api").tree.open({
+        path = cwd,
+      })
     else
       vim.cmd.Ex()
     end

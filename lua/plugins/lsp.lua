@@ -78,7 +78,10 @@ return {
 
       cmp.setup({
         window = {
-          documentation = { -- no border; native-style scrollbar
+          completion = {
+            border = "rounded",
+          },
+          documentation = {
             border = "rounded",
           },
         },
