@@ -78,12 +78,8 @@ return {
 
       cmp.setup({
         window = {
-          completion = {
-            border = "rounded",
-          },
-          documentation = {
-            border = "rounded",
-          },
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
         snippet = {
           expand = function(args)
@@ -95,6 +91,7 @@ return {
           ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
           ['<C-y>'] = cmp.mapping.confirm({ select = true }),
           ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-q>"] = cmp.mapping.complete(),
           -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
           -- ['<CR>'] = cmp.mapping(function(fallback)
           --   if cmp.visible() then
