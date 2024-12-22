@@ -1,12 +1,14 @@
 local M = {}
 
-M.on_attach = function(client, bufnr)
-    local opts = { buffer = bufnr, remap = false }
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("MyLspAttach", {}),
+    callback = function(args)
+    local opts = { buffer = args.buf, remap = false }
 
     -- formatting
     vim.keymap.set("n", "<leader>f",
         function()
-            require("conform").format({ bufnr = bufnr, async = true, lsp_format = "fallback" })
+            require("conform").format({ bufnr = opts.bufnr, async = true, lsp_format = "fallback" })
         end,
         opts)
 
@@ -36,7 +38,10 @@ M.on_attach = function(client, bufnr)
     vim.keymap.set("n", '<leader>wl', function()
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
+    end,
+})
 
+M.on_attach = function(client)
     if client.name == "ts_ls" then
         vim.keymap.set("n", "<leader>tc", ':TSC<CR>')
         vim.keymap.set("n", "<leader>tcs", ':TSCStop<CR>')

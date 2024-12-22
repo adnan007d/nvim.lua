@@ -6,8 +6,29 @@ return {
       { 'williamboman/mason.nvim',          config = true, },
       { 'williamboman/mason-lspconfig.nvim' },
 
+      {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+          library = {
+            -- See the configuration section for more details
+            -- Load luvit types when the `vim.uv` word is found
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
+        },
+      },
+
       -- Autocompletion
-      { 'hrsh7th/nvim-cmp' },
+      {
+        "hrsh7th/nvim-cmp",
+        opts = function(_, opts)
+          opts.sources = opts.sources or {}
+          table.insert(opts.sources, {
+            name = "lazydev",
+            group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+          })
+        end,
+      },
       { 'hrsh7th/cmp-buffer' },
       { 'hrsh7th/cmp-path' },
       { 'saadparwaiz1/cmp_luasnip' },
@@ -30,12 +51,8 @@ return {
       },
       { 'rafamadriz/friendly-snippets' },
 
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
     },
     config = function()
-      require("neodev").setup()
-
       require("mason").setup();
       local mason_lspconfig = require("mason-lspconfig")
 
@@ -93,39 +110,24 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-q>"] = cmp.mapping.complete(),
           -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
-          -- ['<CR>'] = cmp.mapping(function(fallback)
-          --   if cmp.visible() then
-          --     if luasnip.expandable() then
-          --       luasnip.expand()
-          --     else
-          --       cmp.confirm({
-          --         select = true,
-          --       })
-          --     end
-          --   else
-          --     fallback()
-          --   end
-          -- end),
-
-          -- ["<Tab>"] = cmp.mapping(function(fallback)
-          --   if cmp.visible() then
-          --     cmp.select_next_item()
-          --   elseif luasnip.locally_jumpable(1) then
-          --     luasnip.jump(1)
-          --   else
-          --     fallback()
-          --   end
-          -- end, { "i", "s" }),
-
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
+          -- Use <Tab> and <Shift-Tab> to navigate through snippet placeholders
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(1) then
+              luasnip.jump(1) -- Jump to the next placeholder
+            elseif cmp.visible() then
+              cmp.select_next_item()
             else
               fallback()
             end
-          end, { "i", "s" }),
+          end, { 'i', 's' }),
+
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+              luasnip.jump(-1) -- Jump to the previous placeholder
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
 
         }),
         sources = {
@@ -149,25 +151,10 @@ return {
         { border = "rounded" }
       )
 
-
-      -- vim.lsp.buf.hover({
-      --   border = "rounded"
-      -- })
-      --
-      -- vim.lsp.buf.signature_help({
-      --   border = "rounded"
-      -- })
-
       vim.diagnostic.config({
         virtual_text = true,
         float = { border = "rounded" }
       })
-
-      -- vim.filetype.add({
-      --   extension = {
-      --     templ = "templ",
-      --   },
-      -- })
     end
   }
 }
