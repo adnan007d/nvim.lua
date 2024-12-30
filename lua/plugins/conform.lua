@@ -15,7 +15,6 @@ return {
 
 		local formatters_by_ft = {
 			lua = { "stylua" },
-			cs = { "csharpier" },
 		}
 
 		for _, ft in ipairs(prettier_fts) do
