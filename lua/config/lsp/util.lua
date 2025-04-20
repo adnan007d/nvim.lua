@@ -15,6 +15,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", _opts or {}, opts))
 		end
 
+		-- Builtin Autocomplete: (Bit buggy)
+		-- local client = vim.lsp.get_client_by_id(args.data.client_id)
+		-- if client:supports_method('textDocument/completion') then
+		-- 	vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+		-- end
+
 		-- formatting
 		map("n", "<leader>f", function()
 			require("conform").format({ bufnr = opts.bufnr, async = true, lsp_format = "fallback" })
@@ -25,11 +31,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		map("n", "<leader>ws", vim.lsp.buf.workspace_symbol, { desc = "Workspace Symbols" })
 		map("n", "<leader>dd", vim.diagnostic.open_float, { desc = "Open Diagnostic Float for Under Cursor" })
 		map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Set Diagnostic Loclist" })
-		map("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to Previous Diagnostic" })
-		map("n", "]d", vim.diagnostic.goto_next, { desc = "Go to Next Diagnostic" })
-		map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
-		map("n", "<leader>rr", vim.lsp.buf.references, { desc = "References" })
-		map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+		map("n", "[d",
+			function() vim.diagnostic.jump({ count = -1, float = true }) end,
+			{ desc = "Go to Previous Diagnostic" })
+		map("n", "]d",
+			function() vim.diagnostic.jump({ count = -1, float = true }) end,
+			{ desc = "Go to Next Diagnostic" })
+		-- map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
+		-- map("n", "<leader>rr", vim.lsp.buf.references, { desc = "References" })
+		-- map("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
 		map("i", "<C-h>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
 
 		local telescope = require("telescope.builtin")

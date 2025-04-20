@@ -5,11 +5,12 @@ return {
     dependencies = {
       {
         'williamboman/mason.nvim',
-        config = true,
-        registries = {
-          "github:mason-org/mason-registry",
-          "github:Crashdummyy/mason-registry"
-        },
+        opts = {
+          registries = {
+            "github:mason-org/mason-registry",
+            "github:Crashdummyy/mason-registry"
+          },
+        }
       },
       { 'williamboman/mason-lspconfig.nvim' },
 
@@ -146,17 +147,14 @@ return {
         },
       })
 
+      -- these borders doesn't work in nvim 0.11
+      vim.lsp.buf.hover({
+        border = "rounded"
+      })
 
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover,
-        { border = "rounded" }
-      )
-
-
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help,
-        { border = "rounded" }
-      )
+      vim.lsp.buf.signature_help({
+        border = "rounded"
+      })
 
       vim.diagnostic.config({
         virtual_text = true,

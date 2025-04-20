@@ -79,3 +79,16 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to Top Window" })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to Right Window" })
 
 vim.keymap.set("n", "<leader>wt", "<C-w>T", { desc = "Move Window to New Tab" })
+
+
+vim.keymap.set("n", "<leader>vl",
+	function()
+		local is_virtual_text = vim.diagnostic.config().virtual_text
+
+		if is_virtual_text then
+			vim.diagnostic.config({ virtual_text = false, virtual_lines = true })
+		else
+			vim.diagnostic.config({ virtual_text = true, virtual_lines = false })
+		end
+	end, { desc = "Toggle Virtual Line/Text" }
+)
