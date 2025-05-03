@@ -67,7 +67,8 @@ M.on_attach = function(client)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+-- M.capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+M.capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 M.capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
 	lineFoldingOnly = true,

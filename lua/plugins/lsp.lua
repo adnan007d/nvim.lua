@@ -27,21 +27,21 @@ return {
 			},
 
 			-- Autocompletion
-			{
-				"hrsh7th/nvim-cmp",
-				opts = function(_, opts)
-					opts.sources = opts.sources or {}
-					table.insert(opts.sources, {
-						name = "lazydev",
-						group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-					})
-				end,
-			},
-			{ "hrsh7th/cmp-buffer" },
-			{ "hrsh7th/cmp-path" },
-			{ "saadparwaiz1/cmp_luasnip" },
-			{ "hrsh7th/cmp-nvim-lsp" },
-			{ "hrsh7th/cmp-nvim-lua" },
+			-- {
+			-- 	"hrsh7th/nvim-cmp",
+			-- 	opts = function(_, opts)
+			-- 		opts.sources = opts.sources or {}
+			-- 		table.insert(opts.sources, {
+			-- 			name = "lazydev",
+			-- 			group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+			-- 		})
+			-- 	end,
+			-- },
+			-- { "hrsh7th/cmp-buffer" },
+			-- { "hrsh7th/cmp-path" },
+			-- { "saadparwaiz1/cmp_luasnip" },
+			-- { "hrsh7th/cmp-nvim-lsp" },
+			-- { "hrsh7th/cmp-nvim-lua" },
 
 			-- Snippets
 			{
@@ -94,55 +94,55 @@ return {
 				pylsp = require("config.lsp.pylsp"),
 			})
 
-			local cmp = require("cmp")
-			local cmp_select = { behavior = cmp.SelectBehavior.Select }
+			-- local cmp = require("cmp")
+			-- local cmp_select = { behavior = cmp.SelectBehavior.Select }
 			local luasnip = require("luasnip")
 			require("luasnip.loaders.from_vscode").lazy_load()
 
-			cmp.setup({
-				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = cmp.config.window.bordered(),
-				},
-				snippet = {
-					expand = function(args)
-						luasnip.lsp_expand(args.body)
-					end,
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-					["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-q>"] = cmp.mapping.complete(),
-					-- ['<CR>'] = cmp.mapping.confirm({ select = true }),
-					-- Use <Tab> and <Shift-Tab> to navigate through snippet placeholders
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if luasnip.jumpable(1) then
-							luasnip.jump(1) -- Jump to the next placeholder
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-
-					["<S-Tab>"] = cmp.mapping(function(fallback)
-						if luasnip.jumpable(-1) then
-							luasnip.jump(-1) -- Jump to the previous placeholder
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
-				}),
-				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "buffer" },
-					{ name = "path" },
-					{ name = "nvim_lua" },
-				},
-			})
+			-- cmp.setup({
+			-- 	window = {
+			-- 		completion = cmp.config.window.bordered(),
+			-- 		documentation = cmp.config.window.bordered(),
+			-- 	},
+			-- 	snippet = {
+			-- 		expand = function(args)
+			-- 			luasnip.lsp_expand(args.body)
+			-- 		end,
+			-- 	},
+			-- 	mapping = cmp.mapping.preset.insert({
+			-- 		["<C-b>"] = cmp.mapping.scroll_docs(-4),
+			-- 		["<C-f>"] = cmp.mapping.scroll_docs(4),
+			-- 		["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+			-- 		["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+			-- 		["<C-y>"] = cmp.mapping.confirm({ select = true }),
+			-- 		["<C-Space>"] = cmp.mapping.complete(),
+			-- 		["<C-q>"] = cmp.mapping.complete(),
+			-- 		-- ['<CR>'] = cmp.mapping.confirm({ select = true }),
+			-- 		-- Use <Tab> and <Shift-Tab> to navigate through snippet placeholders
+			-- 		["<Tab>"] = cmp.mapping(function(fallback)
+			-- 			if luasnip.jumpable(1) then
+			-- 				luasnip.jump(1) -- Jump to the next placeholder
+			-- 			else
+			-- 				fallback()
+			-- 			end
+			-- 		end, { "i", "s" }),
+			--
+			-- 		["<S-Tab>"] = cmp.mapping(function(fallback)
+			-- 			if luasnip.jumpable(-1) then
+			-- 				luasnip.jump(-1) -- Jump to the previous placeholder
+			-- 			else
+			-- 				fallback()
+			-- 			end
+			-- 		end, { "i", "s" }),
+			-- 	}),
+			-- 	sources = {
+			-- 		{ name = "nvim_lsp" },
+			-- 		{ name = "luasnip" },
+			-- 		{ name = "buffer" },
+			-- 		{ name = "path" },
+			-- 		{ name = "nvim_lua" },
+			-- 	},
+			-- })
 
 			-- -- these borders doesn't work in nvim 0.11
 			-- vim.lsp.buf.hover({
